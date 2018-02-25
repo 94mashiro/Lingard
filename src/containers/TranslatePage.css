@@ -1,0 +1,13 @@
+.translate-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.translate-page-container textarea {
+  resize: none;
+}
+
+.translate-button {
+  margin: 20px auto;
+}

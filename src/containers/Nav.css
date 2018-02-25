@@ -1,0 +1,6 @@
+.nav-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px 4px 0 0;
+}
