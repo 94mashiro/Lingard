@@ -19,12 +19,12 @@ function configureStore(initialState = {}) {
     collapsed: true
   })
 
-  if (process.env.NODE_ENV !== 'text') {
-    middleware.push(logger)
-  }
-  
   middleware.push(thunk)
   middleware.push(router)
+
+  if (process.env.NODE_ENV !== 'test') {
+    middleware.push(logger)
+  }
 
   const actionCreators = {
     ...translateActions
