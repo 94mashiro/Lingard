@@ -2,13 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import SettingButton from '../components/SettingButton'
 import TranslateButton from '../components/TranslateButton'
-import { Row, Col } from 'antd'
 
 import './Nav.css'
 class Nav extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   renderNavButton() {
     let button = null

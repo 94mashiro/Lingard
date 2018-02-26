@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Input, Button } from 'antd'
 import * as TranslateActions from '../actions/translate'
+
+import LanguageSelector from '../components/LanguageSelector'
+import TranslateCode from '../config/translate_code.json'
   
 import './TranslatePage.css'
 
@@ -21,14 +24,21 @@ class TranslatePage extends Component {
     this.props.fetchTranslationApi()
   }
 
+  handleTranslationLanguageChange = (language) => {
+    this.props.setTranslationLanguage(language)
+  }
+
   render() {
     const { TextArea } = Input
-    const { originalText, translationText } = this.props
+    const { originalText, translationText, translateEngine, translationLanguage } = this.props
     return (
       <div className="translate-page-container">  
-        <TextArea autosize={{ minRows: 1 }} value={originalText} onChange={this.handleOriginalTextareaChange} />
-        <Button type="primary" icon="search" className="translate-button" onClick={this.handleTranslateButtonPress}>Tranlate</Button>
-        <TextArea autosize={{ minRows: 1 }} value={translationText} readOnly />
+        <TextArea rows="6" value={originalText} onChange={this.handleOriginalTextareaChange} />
+        <div className="translate-page-toolbar">
+          <LanguageSelector languages={TranslateCode[translateEngine]} onChange={this.handleTranslationLanguageChange} defaultValue={translationLanguage}/>
+          <Button type="primary" icon="search" className="translate-button" onClick={this.handleTranslateButtonPress}>Translate</Button>
+        </div>
+        <TextArea rows="6" value={translationText} readOnly />
       </div>
     )
   }
@@ -37,7 +47,9 @@ class TranslatePage extends Component {
 const mapStateToProps = (state) => {
   return {
     originalText: state.translate.original_text,
-    translationText: state.translate.translation_text
+    translationText: state.translate.translation_text,
+    translateEngine: state.setting.translate_engine,
+    translationLanguage: state.translate.translation_language
   }
 }
 

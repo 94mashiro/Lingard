@@ -1,9 +1,10 @@
+import String from 'string'
+import getTranslateApi from '../config/translate_api'
+
 export const SET_ORIGINALLANGUAGE = '@@TRANSLATE/SET_ORIGINALLANGUAGE'
 export const SET_TRANSLATIONLANGUAGE = '@@TRANSLATE/SET_TRANSLATIONLANGUAGE'
 export const SET_ORIGINALTEXT = '@@TRANSLATE/SET_ORIGINALTEXT'
 export const SET_TRANSLATIONTEXT = '@@TRANSLATE/SET_TRANSLATIONTEXT'
-
-const apiKey = 'AIzaSyAqjulvjI5eJJ9BCg9M0PZhIFWJ_H_X5NI'
 
 export const setOriginalText = (text) => {
   return {
@@ -43,10 +44,12 @@ export const setTranslationLanguage = (language) => {
 
 export const fetchTranslationApi = () => {
   return async (dispatch, getState) => {
-    const { original_language, translation_language, original_text, translation_text } = getState().translate
+    const { translate, setting } = getState()
+    const { translation_language, original_text } = translate
+    const { translate_engine, api_key } = setting
     try {
-      const translation = await fetch(`https://www.googleapis.com/language/translate/v2?key=${apiKey}&target=${translation_language}&q=${encodeURIComponent(original_text)}`).then(res => res.json())
-      dispatch(setTranslationText(translation.data.translations[0].translatedText))
+      const translation = await fetch(getTranslateApi(translate_engine, api_key, translation_language, original_text)).then(res => res.json())
+      dispatch(setTranslationText(String(translation.data.translations[0].translatedText).decodeHTMLEntities()))
     } catch (err) {
       console.error(err)
     }

@@ -2,13 +2,13 @@ import { SET_ORIGINALLANGUAGE, SET_TRANSLATIONLANGUAGE, SET_ORIGINALTEXT, SET_TR
 
 const initialState = {
   original_language: 'en',
-  translation_language: 'zh-cn',
+  translation_language: 'zh-CN',
   original_text: 'hello google translate',
   translation_text: ''
 }
 
 
-export default function translate (state = initialState, action) {
+export default (state = initialState, action) => {
   switch (action.type) {
     case SET_ORIGINALLANGUAGE:
       return { ...state, original_language: action.payload.language }
