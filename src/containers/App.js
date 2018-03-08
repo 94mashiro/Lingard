@@ -10,9 +10,10 @@ import './App.css'
 export default class App extends Component {
   render() {
     const { Header, Content } = Layout
+    const { store, history } = this.props
     return (
-      <Provider store={this.props.store}>
-        <ConnectedRouter history={this.props.history}>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
         <div className="App">
           <Header>
             <Nav />

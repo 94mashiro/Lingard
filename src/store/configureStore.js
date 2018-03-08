@@ -11,6 +11,8 @@ const enhancers = []
 
 const history = createBrowserHistory()
 
+console.log('history', history)
+
 function configureStore(initialState = {}) {
   const router = routerMiddleware(history)
 

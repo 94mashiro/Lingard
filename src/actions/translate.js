@@ -1,4 +1,3 @@
-import String from 'string'
 import getTranslateApi from '../config/translate_api'
 
 export const SET_ORIGINALLANGUAGE = '@@TRANSLATE/SET_ORIGINALLANGUAGE'
@@ -49,7 +48,7 @@ export const fetchTranslationApi = () => {
     const { translate_engine, api_key } = setting
     try {
       const translation = await fetch(getTranslateApi(translate_engine, api_key, translation_language, original_text)).then(res => res.json())
-      dispatch(setTranslationText(String(translation.data.translations[0].translatedText).decodeHTMLEntities()))
+      dispatch(setTranslationText(translation.data.translations[0].translatedText))
     } catch (err) {
       console.error(err)
     }
