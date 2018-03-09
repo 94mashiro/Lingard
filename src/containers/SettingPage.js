@@ -4,12 +4,26 @@ import APIKeySetting from '../components/APIKeySetting'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as SettingActions from '../actions/setting'
+import * as TranslateActions from '../actions/translate'
 import engines from '../config/engine.json'
 
 
 class SettingPage extends Component {
+  reinitTranslationLanguage = (engine) => {
+    switch (engine) {
+      case 'google':
+        this.props.setTranslationLanguage('zh-CN')
+        break
+      case 'baidu':
+        this.props.setTranslationLanguage('zh')
+        break
+      default:
+        break
+    }
+  }
   handleEngineChange = (value) => {
     this.props.setTranslateEngine(value)
+    this.reinitTranslationLanguage(value)
   }
   handleAPIKeyChange = (e) => {
     this.props.setEngineAPIKey(e.target.value)
@@ -30,7 +44,7 @@ class SettingPage extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(SettingActions, dispatch)
+  return bindActionCreators({...SettingActions, ...TranslateActions}, dispatch)
 }
 
 const mapStateToProps = (state) => {

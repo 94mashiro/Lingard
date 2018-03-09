@@ -1,10 +1,10 @@
 {
   "name": "lingard",
   "description": "A desktop translation tool powered by Electron and React.",
-  "homepage": "https://github.com/mashirowang/lingard",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "cross-env": "^5.1.3",
     "electron": "^1.8.2",
     "foreman": "^2.0.0",
     "redux-logger": "^3.0.6"
@@ -64,6 +64,7 @@
   "main": "src/electron-starter.js",
   "scripts": {
     "start": "node scripts/start.js",
+    "build-cdn": "cross-env PUBLIC_URL='http://p59kcvk4u.bkt.clouddn.com' node scripts/build.js",
     "build": "node scripts/build.js",
     "test": "react-script test --env=jsdom",
     "electron": "electron .",

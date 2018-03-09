@@ -3,6 +3,7 @@ import Routes from '../routes'
 import { ConnectedRouter } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import { Layout, Row, Col } from 'antd'
+import { hashHistory } from 'react-router'
 
 import Nav from './Nav'
 import './App.css'

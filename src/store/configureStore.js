@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import { createBrowserHistory } from 'history'
+import createHistory from 'history/createHashHistory'
 import { routerMiddleware } from 'react-router-redux'
 import { createLogger } from 'redux-logger'
 import rootReducer from '../reducers'
@@ -9,9 +9,7 @@ import * as translateActions from '../actions/translate'
 const middleware = []
 const enhancers = []
 
-const history = createBrowserHistory()
-
-console.log('history', history)
+const history = createHistory()
 
 function configureStore(initialState = {}) {
   const router = routerMiddleware(history)
@@ -24,7 +22,7 @@ function configureStore(initialState = {}) {
   middleware.push(thunk)
   middleware.push(router)
 
-  if (process.env.NODE_ENV !== 'test') {
+  if (process.env.NODE_ENV !== 'development' ) {
     middleware.push(logger)
   }
 

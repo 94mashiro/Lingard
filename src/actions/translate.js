@@ -1,4 +1,6 @@
 import getTranslateApi from '../config/translate_api'
+import fetch from '../utils/fetch'
+import { message } from 'antd'
 
 export const SET_ORIGINALLANGUAGE = '@@TRANSLATE/SET_ORIGINALLANGUAGE'
 export const SET_TRANSLATIONLANGUAGE = '@@TRANSLATE/SET_TRANSLATIONLANGUAGE'
@@ -44,13 +46,37 @@ export const setTranslationLanguage = (language) => {
 export const fetchTranslationApi = () => {
   return async (dispatch, getState) => {
     const { translate, setting } = getState()
-    const { translation_language, original_text } = translate
+    let { translation_language, original_text } = translate
     const { translate_engine, api_key } = setting
+    if (!original_text) return
     try {
-      const translation = await fetch(getTranslateApi(translate_engine, api_key, translation_language, original_text)).then(res => res.json())
-      dispatch(setTranslationText(translation.data.translations[0].translatedText))
+      original_text = original_text.split('#').join('')
+      const translation = await fetch(getTranslateApi(translate_engine, translation_language, original_text)).then(res => res.json())
+      let translationText = ''
+      switch (translate_engine) {
+        case 'google':
+          translationText = translation.data.translations[0].translatedText
+          break
+        case 'baidu':
+          translationText = translation.trans_result[0].dst
+          break
+        default:
+          break
+      }
+      dispatch(setTranslationText(translationText))
     } catch (err) {
-      console.error(err)
+      console.log(err)
+      switch (translate_engine) {
+        case 'google':
+          message.error(JSON.parse(err.message).error.message)
+          break
+        case 'baidu':
+          message.error(JSON.parse(err.message).error_msg)
+          break
+        default:
+          console.error(err)
+          break
+      }
     }
   }
 }
