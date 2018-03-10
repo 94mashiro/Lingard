@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Tray, ipcMain, nativeImage } = require('electron');
+const { app, BrowserWindow, Tray, ipcMain, nativeImage, Menu } = require('electron');
 // Module to control application life.
 // Module to create native browser window.
 
@@ -46,6 +46,29 @@ function createWindow() {
     })
 }
 
+const createMenu = () => {
+    const template = [{
+        label: "Lingard",
+        submenu: [
+            { label: "About Lingard", selector: "orderFrontStandardAboutPanel:" },
+            { type: "separator" },
+            { label: "Quit", accelerator: "Command+Q", click: () => { app.quit() }}
+        ]
+    }, {
+            label: "Edit",
+            submenu: [
+                { label: "Undo", accelerator: "Command+Z", selector: "undo:" },
+                { label: "Redo", accelerator: "Shift+Command+Z", selector: "redo:" },
+                { type: "separator" },
+                { label: "Cut", accelerator: "Command+X", selector: "cut:" },
+                { label: "Copy", accelerator: "Command+C", selector: "copy:" },
+                { label: "Paste", accelerator: "Command+V", selector: "paste:" },
+                { label: "Select All", accelerator: "Command+A", selector: "selectAll:" }
+            ]
+    }]
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+}
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -57,7 +80,9 @@ app.on('ready', () => {
         toggleWindow()
     })
     createWindow()
+    createMenu()
 });
+
 
 const toggleWindow = () => {
     if (mainWindow.isVisible()) {
@@ -103,6 +128,8 @@ app.on('activate', function () {
         createWindow()
     }
 });
+
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

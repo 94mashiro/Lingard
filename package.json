@@ -1,7 +1,7 @@
 {
   "name": "lingard",
   "description": "A desktop translation tool powered by Electron and React.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "./",
   "private": true,
   "author": "Mashiro Wang",
