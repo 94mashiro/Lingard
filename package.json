@@ -2,10 +2,13 @@
   "name": "lingard",
   "description": "A desktop translation tool powered by Electron and React.",
   "version": "0.1.0",
+  "homepage": "./",
   "private": true,
+  "author": "Mashiro Wang",
   "devDependencies": {
     "cross-env": "^5.1.3",
     "electron": "^1.8.2",
+    "electron-builder": "^20.4.1",
     "foreman": "^2.0.0",
     "redux-logger": "^3.0.6"
   },
@@ -61,14 +64,17 @@
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
   },
-  "main": "src/electron-starter.js",
+  "main": "./src/electron-starter.js",
   "scripts": {
     "start": "node scripts/start.js",
-    "build-cdn": "cross-env PUBLIC_URL='http://p59kcvk4u.bkt.clouddn.com' node scripts/build.js",
     "build": "node scripts/build.js",
     "test": "react-script test --env=jsdom",
     "electron": "electron .",
-    "dev": "nf start -p 3000"
+    "dev": "nf start -p 3000",
+    "pack": "electron-builder --dir",
+    "dist": "yarn run build && electron-builder",
+    "postinstall": "electron-builder install-app-deps",
+    "electron-dist": "build"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -111,5 +117,13 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },                                       
+  "build": {
+    "appId": "com.electron.lingard",
+    "productName": "Lingard",
+    "files": [
+      "**/*",
+      "build/**/*"
+    ]
   }
 }
